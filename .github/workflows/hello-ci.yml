@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      
+
   workflow_dispatch:
 jobs:
   hello:
@@ -17,3 +17,23 @@ jobs:
         run: uname -a
       - name: Print Myname
         run: echo "My name is Srujan"
+      
+  secrets-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secret
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+        run: |
+          if [ -n "$DEMO_SECRET" ]; then
+            echo "Secret is available."
+          else
+            echo "Secret is not configured."
+            exit 1
+          fi
+          
+  goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print farewell
+        run: echo "Goodbye from GitHub Actions!"
